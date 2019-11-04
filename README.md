@@ -18,6 +18,60 @@
 ```sh
 npm install @omgimalexis/switch-case
 ```
+ 
+## Usage
+ 
+```js
+const switchCase = require('switch-case').default;
+
+// Returns selected case
+{
+  const case = 'a';
+  const result = await switchCase({
+    a: 1,
+    b: 2,
+    default: 3
+  }, case);
+
+  // result = 1
+}
+
+// Returns default case when selected isn't found
+{
+  const case = 'z';
+  const result = await switchCase({
+    a: 1,
+    b: 2,
+    default: 3
+  }, case);
+
+  // result = 3
+}
+
+// Allows functions
+{
+  const case = 'a';
+  const result = await switchCase({
+    a: () => 1,
+    b: 2,
+    default: 3
+  }, case);
+
+  // result = 1
+}
+
+// Allows async functions
+{
+  const case = 'a';
+  const result = await switchCase({
+    a: async () => 1,
+    b: 2,
+    default: 3
+  }, case);
+
+  // result = 1
+}
+```
 
 ## Run tests
 
