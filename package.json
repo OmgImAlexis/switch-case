@@ -1,21 +1,24 @@
 {
-  "name": "switch-case",
+  "name": "@omgimalexis/switch-case",
+  "private": false,
   "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "xo && npm run build && ava --verbose",
     "build": "webpack --config ./webpack.config.js",
-    "release": "standard-version"
+    "release": "standard-version",
+    "prepublish": "npm run build"
   },
   "keywords": [],
   "author": "Alexis Tyler <xo@wvvw.me> (https://wvvw.me/)",
   "license": "MIT",
-  "dependencies": {
-    "ava": "2.4.0",
-    "webpack": "4.41.2"
-  },
+  "files": [
+    "dist/**/*"
+  ],
   "devDependencies": {
+    "ava": "2.4.0",
+    "webpack": "4.41.2",
     "awesome-typescript-loader": "5.2.1",
     "cz-conventional-changelog": "3.0.2",
     "standard-version": "7.0.0",
