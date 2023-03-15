@@ -1,4 +1,4 @@
-import { Cases, Switch, switchCase } from './index';
+import { Cases, Switch, switchCase, default as switchCase2 } from './index';
 import { strictEqual } from 'node:assert';
 
 type AssertType<Actual extends Expected, Expected> = Actual extends Expected
@@ -83,6 +83,21 @@ describe('Switch', () => {
 		}
 	});
 
+	it('non-matching values fallback to default', async () => {
+		const { Case: objectCase } = Switch(objectLike);
+		const { Case: mapCase } = Switch(mapLike);
+
+		{
+			const result = await objectCase(false);
+			assertType(result, 42n as const);
+		}
+
+		{
+			const result = await mapCase(false);
+			assertType(result, 42n as const);
+		}
+	})
+
 	it("can't match boolean/bigint by case object keys", async () => {
 		const { Case } = Switch(objectLike);
 
@@ -146,7 +161,7 @@ describe('Legacy switchCase', () => {
 				default: 1000 as const,
 			};
 
-			const result = switchCase(cases, 'a');
+			const result = switchCase2(cases, 'a');
 			strictEqual(result, 1);
 		}
 
@@ -158,7 +173,7 @@ describe('Legacy switchCase', () => {
 				default: () => 1000 as const,
 			};
 
-			const result = switchCase(cases, 'a');
+			const result = switchCase2(cases, 'a');
 			strictEqual(result, 1);
 		}
 
@@ -170,7 +185,7 @@ describe('Legacy switchCase', () => {
 				default: async () => 1000 as const,
 			};
 
-			const result = await switchCase(cases, 'a');
+			const result = await switchCase2(cases, 'a');
 			strictEqual(result, 1);
 		}
 	});
