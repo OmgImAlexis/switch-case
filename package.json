@@ -8,7 +8,8 @@
     "test": "xo && npm run build && ava --verbose",
     "build": "webpack --config ./webpack.config.js",
     "release": "standard-version",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "format": "prettier -w src/**/*.ts"
   },
   "keywords": [],
   "author": "Alexis Tyler <xo@wvvw.me> (https://wvvw.me/)",
