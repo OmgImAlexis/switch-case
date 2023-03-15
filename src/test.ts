@@ -1,14 +1,16 @@
 import { Cases, Switch, switchCase } from './index';
 import { strictEqual } from 'node:assert';
 
-type AssertType<Actual extends Expected, Expected> = Actual extends Expected ? true : never
+type AssertType<Actual extends Expected, Expected> = Actual extends Expected
+	? true
+	: never;
 /** Assert that two primitive types are equivalent and strictly equal at runtime. */
 function assertType<A extends E, E>(actual: A, expected: E): AssertType<A, E> {
-    return strictEqual(actual, expected) as any
+	return strictEqual(actual, expected) as any;
 }
 
 describe('Switch', () => {
-    const objectLike = {
+	const objectLike = {
 		a: 1,
 		[100]: () => 'hello' as const,
 		[200n as unknown as 200]: async () => 'world' as const,
@@ -33,53 +35,67 @@ describe('Switch', () => {
 		strictEqual(typeof Case, 'function');
 	});
 
-    it('matches by case keys', async () => {
-        const { Case } = Switch(objectLike);
-    
-        {
-            const result = Case('a')
-            assertType(result, 1 as const)
-        }
+	it('matches by case object keys', async () => {
+		const { Case } = Switch(objectLike);
 
-        {
-            const result = Case(100)
-            assertType(result, 'hello' as const)
-        }
+		{
+			const result = Case('a');
+			assertType(result, 1 as const);
+		}
 
-        {
-            const result = await Case(200)
-            assertType(result, 'world' as const)
-        }
+		{
+			const result = Case(100);
+			assertType(result, 'hello' as const);
+		}
 
-        {
-            const result = Case('true')
-            assertType(result, 'NCC-1701-D' as const)
-        }
-    })
+		{
+			const result = await Case(200);
+			assertType(result, 'world' as const);
+		}
 
-    it('matches by case entries', async () => {
-        const { Case } = Switch(mapLike);
-    
-        {
-            const result = Case('a')
-            assertType(result, 1 as const)
-        }
+		{
+			const result = Case('true');
+			assertType(result, 'NCC-1701-D' as const);
+		}
+	});
 
-        {
-            const result = Case(100)
-            assertType(result, 'hello' as const)
-        }
+	it('matches by case entries', async () => {
+		const { Case } = Switch(mapLike);
 
-        {
-            const result = await Case(200n)
-            assertType(result, 'world' as const)
-        }
+		{
+			const result = Case('a');
+			assertType(result, 1 as const);
+		}
 
-        {
-            const result = Case(true)
-            assertType(result, 'NCC-1701-D' as const)
-        }
-    })
+		{
+			const result = Case(100);
+			assertType(result, 'hello' as const);
+		}
+
+		{
+			const result = await Case(200n);
+			assertType(result, 'world' as const);
+		}
+
+		{
+			const result = Case(true);
+			assertType(result, 'NCC-1701-D' as const);
+		}
+	});
+
+	it("can't match boolean/bigint by case object keys", async () => {
+		const { Case } = Switch(objectLike);
+
+		{
+			const result = await Case(200n);
+			assertType(result, 42n as const);
+		}
+
+		{
+			const result = await Case(true);
+			assertType(result, 42n as const);
+		}
+	});
 });
 
 describe('Legacy switchCase', () => {
