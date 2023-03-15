@@ -18,9 +18,13 @@
     "dist/**/*"
   ],
   "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.3",
     "ava": "2.4.0",
     "awesome-typescript-loader": "5.2.1",
     "cz-conventional-changelog": "3.0.2",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
     "prettier": "^2.8.4",
     "standard-version": "7.0.0",
     "ts-loader": "6.2.1",
