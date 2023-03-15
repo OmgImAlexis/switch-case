@@ -8,12 +8,16 @@ export type Switch<S extends Cases> = {
 	Case<C extends CaseTypes>(choice: C): SwitchResult<S, C>;
 };
 
-const PROPERTY_KEY_TYPES = ['string', 'number', 'symbol'] as const satisfies readonly PropertyKey[]
+const PROPERTY_KEY_TYPES = [
+	'string',
+	'number',
+	'symbol',
+] as const satisfies readonly PropertyKey[];
 function isPropertyKey(input: any): input is PropertyKey {
-	return PROPERTY_KEY_TYPES.includes((typeof input) as any)
+	return PROPERTY_KEY_TYPES.includes(typeof input as any);
 }
-function hasOwn (object: any, key: PropertyKey) {
-	return Object.prototype.hasOwnProperty.call(object, key)
+function hasOwn(object: any, key: PropertyKey) {
+	return Object.prototype.hasOwnProperty.call(object, key);
 }
 
 /** Create a reusable switch statement. */
