@@ -54,5 +54,5 @@ export type SwitchResult<
 	: T extends CaseObject
 	? A extends CaseObjectType
 		? SwitchObjectResult<T, A>
-		: undefined
-	: undefined;
+		: SwitchObjectResult<T, 'default'>
+	: never;
