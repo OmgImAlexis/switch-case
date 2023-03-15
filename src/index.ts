@@ -1,42 +1,46 @@
-interface Cases {
-	[key: string]: String | Function | Promise<any>,
-	default: String | Function | Promise<any>
+import type { Cases, CaseTypes, SwitchResult } from './types';
+
+/** Represents a functional switch statement. */
+export type Switch<S extends Cases> = {
+	/** Get the result of a specific case. */
+	Case<C extends CaseTypes>(choice: C): SwitchResult<S, C>;
+};
+
+/** Create a reusable switch statement. */
+export function Switch<S extends Cases>(cases: S): Switch<S> {
+	const isArray = Array.isArray(cases);
+	const map = isArray ? new Map(cases) : new Map();
+	const returnValue = (value: any): any => {
+		if (typeof value === 'function') {
+			return value();
+		}
+		return value;
+	};
+	return {
+		Case<C extends CaseTypes>(choice: C): SwitchResult<S, C> {
+			if (isArray) {
+				if (map.has(choice)) {
+					return returnValue(map.get(choice));
+				}
+				return returnValue(map.get('default'));
+			}
+			if (Object.prototype.hasOwnProperty.call(cases, choice as any)) {
+				return returnValue(cases[choice as any]);
+			}
+			return returnValue(cases['default' as any]);
+		},
+	};
 }
 
 /**
- * Get the case or fallback to default
- *
+ * Original functional switch case API; creates a new switch on every method call.
+ * @deprecated
  */
-const getCase = async (cases: Cases, choice: string) => {
-	// Return default if case is missing
-	if (!Object.keys(cases).includes(choice)) {
-		const result = await cases.default;
-		return result;
-	}
-
-	// Return the selected choice
-	const result = await cases[choice];
-	return result;
-};
-
-/**
- * Switch case
- */
-const switchCase = async (cases: any, choice: string) => {
-	const result = await getCase(cases, choice);
-
-	// If it returns a function run it
-	if (typeof result === 'function') {
-		return result();
-	}
-
-	// If it returns an async function await it
-	if (result.constructor.name === 'AsyncFunction') {
-		const actualResult = await result();
-		return actualResult;
-	}
-
-	return result;
-};
+export function switchCase<S extends Cases, C extends CaseTypes>(
+	cases: S,
+	choice: C
+): SwitchResult<S, C> {
+	return Switch(cases).Case(choice);
+}
 
 export default switchCase;
