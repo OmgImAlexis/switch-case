@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc mocha",
+    "test": "nyc -x src/test.ts mocha",
     "build": "webpack --config ./webpack.config.js",
     "release": "standard-version",
     "prepublish": "npm run build",
