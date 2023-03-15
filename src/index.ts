@@ -1,5 +1,7 @@
 import type { Cases, CaseTypes, SwitchResult } from './types';
 
+export type { Cases, CaseTypes, SwitchResult };
+
 /** Represents a functional switch statement. */
 export type Switch<S extends Cases> = {
 	/** Get the result of a specific case. */
