@@ -8,6 +8,14 @@ export type Switch<S extends Cases> = {
 	Case<C extends CaseTypes>(choice: C): SwitchResult<S, C>;
 };
 
+const PROPERTY_KEY_TYPES = ['string', 'number', 'symbol'] as const satisfies readonly PropertyKey[]
+function isPropertyKey(input: any): input is PropertyKey {
+	return PROPERTY_KEY_TYPES.includes((typeof input) as any)
+}
+function hasOwn (object: any, key: PropertyKey) {
+	return Object.prototype.hasOwnProperty.call(object, key)
+}
+
 /** Create a reusable switch statement. */
 export function Switch<S extends Cases>(cases: S): Switch<S> {
 	const isArray = Array.isArray(cases);
@@ -26,7 +34,7 @@ export function Switch<S extends Cases>(cases: S): Switch<S> {
 				}
 				return returnValue(map.get('default'));
 			}
-			if (Object.prototype.hasOwnProperty.call(cases, choice as any)) {
+			if (isPropertyKey(choice) && hasOwn(cases, choice)) {
 				return returnValue(cases[choice as any]);
 			}
 			return returnValue(cases['default' as any]);
