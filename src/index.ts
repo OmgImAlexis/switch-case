@@ -34,6 +34,7 @@ export function Switch<S extends Cases>(cases: S): Switch<S> {
 	};
 
 	return {
+		/** Get the result of a specific case. */
 		Case<C extends CaseTypes>(choice: C): SwitchResult<S, C> {
 			if (isArray) {
 				if (map.has(choice)) {
