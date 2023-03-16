@@ -25,6 +25,8 @@
   ],
   "author": "Alexis Tyler <xo@wvvw.me> (https://wvvw.me/)",
   "license": "MIT",
+  "repository": "https://github.com/OmgImAlexis/switch-case.git",
+  "readme": "https://github.com/OmgImAlexis/switch-case#readme",
   "files": [
     "dist/**/index.*",
     "dist/**/types.*"
