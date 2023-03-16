@@ -1,7 +1,7 @@
 {
   "name": "@omgimalexis/switch-case",
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A functional approach to switches",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -23,10 +23,12 @@
     "switch",
     "case"
   ],
-  "contributors": [{
-    "name": "Aaron Huggins",
-    "url": "https://github.com/aaronhuggins"
-  }],
+  "contributors": [
+    {
+      "name": "Aaron Huggins",
+      "url": "https://github.com/aaronhuggins"
+    }
+  ],
   "author": "Alexis Tyler <xo@wvvw.me> (https://wvvw.me/)",
   "license": "MIT",
   "repository": "https://github.com/OmgImAlexis/switch-case.git",
