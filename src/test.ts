@@ -1,18 +1,19 @@
-import { Cases, Switch, switchCase, default as switchCase2 } from './index';
-import { strictEqual } from 'node:assert';
+/* eslint-disable new-cap,@typescript-eslint/naming-convention,@typescript-eslint/no-confusing-void-expression,import/extensions */
+import {strictEqual} from 'node:assert';
+import switchCase2, {Cases, Switch, switchCase} from './index';
 
 type AssertType<Actual extends Expected, Expected> = Actual extends Expected
 	? true
 	: never;
 /** Assert that two primitive types are equivalent and strictly equal at runtime. */
 function assertType<A extends E, E>(actual: A, expected: E): AssertType<A, E> {
-	return strictEqual(actual, expected) as any;
+	return strictEqual(actual, expected) as unknown as AssertType<A, E>;
 }
 
 describe('Switch', () => {
 	const objectLike = {
 		a: 1,
-		[100]: () => 'hello' as const,
+		100: () => 'hello' as const,
 		[200n as unknown as 200]: async () => 'world' as const,
 		[true as unknown as 'true']: 'NCC-1701-D',
 		default: async () => 42n as const,
@@ -26,17 +27,17 @@ describe('Switch', () => {
 	] as const satisfies Cases;
 
 	it('creates functional switch from object', () => {
-		const { Case } = Switch(objectLike);
+		const {Case} = Switch(objectLike);
 		strictEqual(typeof Case, 'function');
 	});
 
 	it('creates functional switch from entries', () => {
-		const { Case } = Switch(mapLike);
+		const {Case} = Switch(mapLike);
 		strictEqual(typeof Case, 'function');
 	});
 
 	it('matches by case object keys', async () => {
-		const { Case } = Switch(objectLike);
+		const {Case} = Switch(objectLike);
 
 		{
 			const result = Case('a');
@@ -60,7 +61,7 @@ describe('Switch', () => {
 	});
 
 	it('matches by case entries', async () => {
-		const { Case } = Switch(mapLike);
+		const {Case} = Switch(mapLike);
 
 		{
 			const result = Case('a');
@@ -84,8 +85,8 @@ describe('Switch', () => {
 	});
 
 	it('non-matching values fallback to default', async () => {
-		const { Case: objectCase } = Switch(objectLike);
-		const { Case: mapCase } = Switch(mapLike);
+		const {Case: objectCase} = Switch(objectLike);
+		const {Case: mapCase} = Switch(mapLike);
 
 		{
 			const result = await objectCase(false);
@@ -96,10 +97,10 @@ describe('Switch', () => {
 			const result = await mapCase(false);
 			assertType(result, 42n as const);
 		}
-	})
+	});
 
-	it("can't match boolean/bigint by case object keys", async () => {
-		const { Case } = Switch(objectLike);
+	it('can\'t match boolean/bigint by case object keys', async () => {
+		const {Case} = Switch(objectLike);
 
 		{
 			const result = await Case(200n);
@@ -114,7 +115,7 @@ describe('Switch', () => {
 });
 
 describe('Legacy switchCase', () => {
-	it("uses default when param can't be found in cases", async () => {
+	it('uses default when param can\'t be found in cases', async () => {
 		// Non-function case
 		{
 			const cases = {

@@ -1,6 +1,5 @@
-import type { Cases, CaseTypes, SwitchResult } from './types';
-
-export type { Cases, CaseTypes, SwitchResult };
+/* eslint-disable new-cap,@typescript-eslint/naming-convention,@typescript-eslint/no-redeclare,@typescript-eslint/no-unsafe-return,import/extensions */
+import type {Cases, CaseTypes, SwitchResult} from './types';
 
 /** Represents a functional switch statement. */
 export type Switch<S extends Cases> = {
@@ -13,35 +12,42 @@ const PROPERTY_KEY_TYPES = [
 	'number',
 	'symbol',
 ] as const satisfies readonly PropertyKey[];
+
 function isPropertyKey(input: any): input is PropertyKey {
 	return PROPERTY_KEY_TYPES.includes(typeof input as any);
 }
-function hasOwn(object: any, key: PropertyKey) {
-	return Object.prototype.hasOwnProperty.call(object, key);
+
+function hasOwn(object: any, key: PropertyKey): boolean {
+	return Object.prototype.hasOwnProperty.call(object, key) as boolean;
 }
 
 /** Create a reusable switch statement. */
 export function Switch<S extends Cases>(cases: S): Switch<S> {
 	const isArray = Array.isArray(cases);
 	const map = isArray ? new Map(cases) : new Map();
-	const returnValue = (value: any): any => {
+	const returnValue = <C extends CaseTypes>(value: unknown): SwitchResult<S, C> => {
 		if (typeof value === 'function') {
-			return value();
+			return value() as SwitchResult<S, C>;
 		}
-		return value;
+
+		return value as SwitchResult<S, C>;
 	};
+
 	return {
 		Case<C extends CaseTypes>(choice: C): SwitchResult<S, C> {
 			if (isArray) {
 				if (map.has(choice)) {
-					return returnValue(map.get(choice));
+					return returnValue<C>(map.get(choice));
 				}
-				return returnValue(map.get('default'));
+
+				return returnValue<C>(map.get('default'));
 			}
+
 			if (isPropertyKey(choice) && hasOwn(cases, choice)) {
-				return returnValue(cases[choice as any]);
+				return returnValue<C>(cases[choice as number]);
 			}
-			return returnValue(cases['default' as any]);
+
+			return returnValue<C>(cases['default' as unknown as number]);
 		},
 	};
 }
@@ -52,9 +58,11 @@ export function Switch<S extends Cases>(cases: S): Switch<S> {
  */
 export function switchCase<S extends Cases, C extends CaseTypes>(
 	cases: S,
-	choice: C
+	choice: C,
 ): SwitchResult<S, C> {
 	return Switch(cases).Case(choice);
 }
 
 export default switchCase;
+
+export {type CaseTypes, type Cases, type SwitchResult} from './types';
