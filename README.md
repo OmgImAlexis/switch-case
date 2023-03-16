@@ -20,9 +20,37 @@ npm install @omgimalexis/switch-case
 ```
  
 ## Usage
+
+The latest release now supports both `require` and `import` JavaScript syntax, and provides a more complete TypeScript system. This gives your editor super powers like more exhaustive types and intellisense when used with more advanced features like `as const`. Functional switches will return their real case type; you can use the library synchronously for every non-async case.
+
+```typescript
+import { Switch } from '@omgimalexis/switch-case'
+
+const { Case } = Switch({
+  a: 1,
+  b: 2,
+  default: async () => 3 as const
+} as const)
+
+// Returns selected case
+const result1 = Case('a');
+//    ^ const result1: 1
+
+console.log(result1)
+// Expected: 1
+
+// Returns default case when selected isn't found
+const result2 = await Case('z');
+//    ^ const result1: 3
+
+console.log(result2)
+// Expected: 3
+```
+
+The version `0.0.3` style of switch case function is still available for migration so your projects just work. It also benefits from the new type system!
  
 ```js
-const switchCase = require('switch-case').default;
+const switchCase = require('@omgimalexis/switch-case').default;
 
 // Returns selected case
 {
