@@ -41,7 +41,7 @@ console.log(result1)
 
 // Returns default case when selected isn't found
 const result2 = await Case('z');
-//    ^ const result1: 3
+//    ^ const result2: 3
 
 console.log(result2)
 // Expected: 3
