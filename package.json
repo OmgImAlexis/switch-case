@@ -18,7 +18,7 @@
     "prepublish": "npm run build",
     "lint": "xo --fix"
   },
-  "keywords": [],
+  "keywords": ["switch", "case"],
   "author": "Alexis Tyler <xo@wvvw.me> (https://wvvw.me/)",
   "license": "MIT",
   "files": [
