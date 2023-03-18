@@ -1,14 +1,8 @@
 <h1 align="center">Welcome to switch-case 👋</h1>
 <p>
-  <a href="https://www.npmjs.com/package/switch-case" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/@omgimalexis/switch-case.svg">
-  </a>
-  <a href="#" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
-  <a href="https://twitter.com/OmgImAlexis" target="_blank">
-    <img alt="Twitter: OmgImAlexis" src="https://img.shields.io/twitter/follow/OmgImAlexis.svg?style=social" />
-  </a>
+  <a href="https://www.npmjs.com/package/@omgimalexis/switch-case" target="_blank"><img alt="Version" src="https://img.shields.io/npm/v/@omgimalexis/switch-case.svg"></a>
+  <a href="#" target="_blank"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></a>
+  <a href="https://twitter.com/OmgImAlexis" target="_blank"><img alt="Twitter: OmgImAlexis" src="https://img.shields.io/twitter/follow/OmgImAlexis.svg?style=social" /></a>
 </p>
 
 > A functional approach to switches
