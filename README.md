@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to switch-case 👋</h1>
 <p>
   <a href="https://www.npmjs.com/package/switch-case" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/switch-case.svg">
+    <img alt="Version" src="https://img.shields.io/npm/v/@omgimalexis/switch-case.svg">
   </a>
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
